@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/tfielder/PlayPlayBE/issues"
   },
-  "homepage": "https://github.com/tfielder/PlayPlayBE#readme"
+  "homepage": "https://github.com/tfielder/PlayPlayBE#readme",
+  "dependencies": {
+    "knex": "^0.15.2"
+  }
 }
