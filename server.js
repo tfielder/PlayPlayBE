@@ -83,7 +83,6 @@ app.put('/api/v1/songs/:id', (request, response) => {
     song_rating: request.body["songs"]['song_rating']
   };
 
-
   database('songs').where('id', request.params.id).update(update_info).returning('*')
     .then(song => {
       response.status(200).json({ song })
