@@ -18,18 +18,17 @@ app.get('/', (request, response) => {
 //Create
 app.post('/api/v1/songs', (request, response) => {
   const song = request.body;
-
   for (let requiredParameter of ['name', 'artist_name', 'genre', 'song_rating']){
     if (!song[requiredParameter]){
       return response
-        .status(422)
+        .status(400)
         .send({ error: `Expected format: { name: <String>, artist_name: <String>, genre: <String>, song_rating: <Integer>}. You're missing a "${requiredParameter}" property.`});
     }
   }
 
   database('songs').insert(song, 'id')
     .then(song => {
-      response.status(201).json({ id: song[0] })
+      response.status(201).json({ song: {song}})
     })
     .catch(error => {
       response.status(500).json({ error });
@@ -50,9 +49,9 @@ app.get('/api/v1/favorites', (request, response) => {
 
 app.get('/api/v1/songs/:id', (request, response) => {
   database('songs').where('id', request.params.id).select('id', 'name', 'artist_name', 'genre', 'song_rating')
-    .then(songs => {
-      if (songs.length) {
-        response.status(200).json(songs);
+    .then(song => {
+      if (song.length) {
+        response.status(200).json(song);
       } else {
         response.status(404).json({
           error: `Could not find song with id ${request.params.id}`
