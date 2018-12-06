@@ -67,6 +67,7 @@ app.get('/api/v1/songs/:id', (request, response) => {
 app.put('/api/v1/songs/:id', (request, response) => {
   const song = request.body;
   const id = parseInt(request.params.id);
+
   for (let requiredParameter of ['id', 'name', 'artist_name', 'genre', 'song_rating']){
     if (!song["songs"][requiredParameter]){
       return response
@@ -82,9 +83,10 @@ app.put('/api/v1/songs/:id', (request, response) => {
     song_rating: request.body["songs"]['song_rating']
   };
 
-  database('songs').where('id', request.params.id).update(update_info)
+
+  database('songs').where('id', request.params.id).update(update_info).returning('*')
     .then(song => {
-      response.status(200).json({ "song": song[id] })
+      response.status(200).json({ song })
     })
     .catch(error => {
       response.status(500).json({ error });
