@@ -63,6 +63,34 @@ app.get('/api/v1/songs/:id', (request, response) => {
     });
 });
 
+//Update
+app.put('/api/v1/songs/:id', (request, response) => {
+  const song = request.body;
+  const id = parseInt(request.params.id);
+  for (let requiredParameter of ['id', 'name', 'artist_name', 'genre', 'song_rating']){
+    if (!song["songs"][requiredParameter]){
+      return response
+        .status(422)
+        .send({ error: `Expected format: { name: <String>, artist_name: <String>, genre: <String>, song_rating: <Integer>}. You're missing a "${requiredParameter}" property.`});
+    }
+  }
+
+  let update_info = {
+    name: request.body["songs"]['name'],
+    artist_name: request.body["songs"]['artist_name'],
+    genre: request.body["songs"]['genre'],
+    song_rating: request.body["songs"]['song_rating']
+  };
+
+  database('songs').where('id', request.params.id).update(update_info)
+    .then(song => {
+      response.status(200).json({ "song": song[id] })
+    })
+    .catch(error => {
+      response.status(500).json({ error });
+    });
+});
+
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} is running on ${app.get('port')}.`);
 });
