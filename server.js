@@ -26,9 +26,10 @@ app.post('/api/v1/songs', (request, response) => {
     }
   }
 
-  database('songs').insert(song, 'id')
+  database('songs').insert(song, 'id').returning('*')
     .then(song => {
-      response.status(201).json({ song: {song}})
+      const songs = song[0]
+      response.status(201).json({ songs })
     })
     .catch(error => {
       response.status(500).json({ error });
@@ -67,6 +68,7 @@ app.get('/api/v1/songs/:id', (request, response) => {
 app.put('/api/v1/songs/:id', (request, response) => {
   const song = request.body;
   const id = parseInt(request.params.id);
+
   for (let requiredParameter of ['id', 'name', 'artist_name', 'genre', 'song_rating']){
     if (!song["songs"][requiredParameter]){
       return response
@@ -82,9 +84,9 @@ app.put('/api/v1/songs/:id', (request, response) => {
     song_rating: request.body["songs"]['song_rating']
   };
 
-  database('songs').where('id', request.params.id).update(update_info)
+  database('songs').where('id', request.params.id).update(update_info).returning('*')
     .then(song => {
-      response.status(200).json({ "song": song[id] })
+      response.status(200).json({ song })
     })
     .catch(error => {
       response.status(500).json({ error });
@@ -95,7 +97,7 @@ app.put('/api/v1/songs/:id', (request, response) => {
 app.delete('/api/v1/songs/:id', (request, response) => {
   const song = database('songs').where('id', request.params.id).select();
   if (song) {
-    database('songs').where('id', request.params.id).del()
+    database('songs').where('id', request.params.id).del().returning('*')
       .then(song => {
         return response.status(204);
       })
