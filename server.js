@@ -97,13 +97,13 @@ app.delete('/api/v1/songs/:id', (request, response) => {
   if (song) {
     database('songs').where('id', request.params.id).del()
       .then(song => {
-        response.status(204);
+        return response.status(204);
       })
       .catch(error => {
-        response.status(500).json({ error });
+        return response.status(500).json({ error });
       })
   } else {
-    response.status(404).send({ error: `Could not find song with id ${request.params.id}` });
+    return response.status(404).send({ error: `Could not find song with id ${request.params.id}` });
   }
  });
 
