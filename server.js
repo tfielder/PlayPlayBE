@@ -15,6 +15,42 @@ app.get('/', (request, response) => {
   response.send("Welcome!\n");
 });
 
+// Playlists Section
+
+// Playlist Songs Section
+//Create
+// app.post('/api/v1/playlists/:playlist_id/songs/:id', (request, response) => {
+//   const playlist_param = request.params.playlist_id;
+//   const song_param = request.params.id;
+//   if (!playlist_param) {
+//     return response
+//       .status(400)
+//       .send({ error: `No playlist id provided.`});
+//   }
+//   if (!song_param) {
+//     return response
+//       .status(400)
+//       .send({ error: `No song id provided.`});
+//   }
+//   const pry = require('pryjs');
+//   eval(pry.it);
+//   const playlist_song = {
+//     song_id: song_param,
+//     playlist_id: playlist_param
+//   };
+//
+//   database('playlist_songs').insert(playlist_song, 'id').returning('*')
+//     .then(value => {
+//       const playlister = value[0]
+//       response.status(201).json({ playlister })
+//     })
+//     .catch(error => {
+//       response.status(500).json({ error });
+//     });
+// });
+
+
+// Songs Section
 //Create
 app.post('/api/v1/songs', (request, response) => {
   const song = request.body;
