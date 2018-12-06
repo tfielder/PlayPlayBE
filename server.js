@@ -97,7 +97,7 @@ app.put('/api/v1/songs/:id', (request, response) => {
 app.delete('/api/v1/songs/:id', (request, response) => {
   const song = database('songs').where('id', request.params.id).select();
   if (song) {
-    database('songs').where('id', request.params.id).del()
+    database('songs').where('id', request.params.id).del().returning('*')
       .then(song => {
         return response.status(204);
       })
