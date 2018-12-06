@@ -91,6 +91,22 @@ app.put('/api/v1/songs/:id', (request, response) => {
     });
 });
 
+//Destroy
+app.delete('/api/v1/songs/:id', (request, response) => {
+  const song = database('songs').where('id', request.params.id).select();
+  if (song) {
+    database('songs').where('id', request.params.id).del()
+      .then(song => {
+        response.status(204);
+      })
+      .catch(error => {
+        response.status(500).json({ error });
+      })
+  } else {
+    response.status(404).send({ error: `Could not find song with id ${request.params.id}` });
+  }
+ });
+
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} is running on ${app.get('port')}.`);
 });
