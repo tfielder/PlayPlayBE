@@ -16,6 +16,17 @@ app.get('/', (request, response) => {
 });
 
 // Playlists Section
+//Read
+app.get('/api/v1/playlists', (request, response) => {
+
+  database('playlists').select('id', 'playlist_name')
+    .then((playlists) => {
+      response.status(200).json(playlists);
+    })
+    .catch((error) => {
+      response.status(500).json({ error });
+    });
+});
 
 // Playlist Songs Section
 //Create
