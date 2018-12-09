@@ -7,6 +7,11 @@ const environment = process.env.NODE_ENV || 'development';
 const configuration = require('../../knexfile')[environment];
 const database = require('knex')(configuration);
 
+var DatabaseCleaner = require('database-cleaner');
+var databaseCleaner = new DatabaseCleaner('postgresql');
+
+databaseCleaner.clean(database, callback);
+
 chai.use(chaiHttp);
 
 describe('Client Routes', () => {
