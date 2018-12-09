@@ -12,7 +12,7 @@ app.set('port', process.env.PORT || 3000);
 app.locals.title = 'playplay';
 
 app.get('/', (request, response) => {
-  response.send("Welcome!\n");
+  response.send("Welcome!");
 });
 
 // Playlists Section
@@ -242,6 +242,4 @@ app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} is running on ${app.get('port')}.`);
 });
 
-module.exports = {
-  app,
-}
+module.exports = app;
