@@ -114,11 +114,6 @@ app.delete('/api/v1/playlists/:playlist_id/songs/:id', (request, response) => {
   const playlist_param = request.params.playlist_id;
   const song_param = request.params.id;
 
-  const playlist_song = {
-    song_id: song_param,
-    playlist_id: playlist_param
-  };
-
   const deleteSongPlaylist = () => {
     return database('playlist_songs').where('playlist_songs.playlist_id', '=', playlist_param).where('playlist_songs.song_id', '=', song_param).limit('1').del()
   }
