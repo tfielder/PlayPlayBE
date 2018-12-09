@@ -91,14 +91,10 @@ app.post('/api/v1/playlists/:playlist_id/songs/:id', (request, response) => {
   const playlist_param = request.params.playlist_id;
   const song_param = request.params.id;
   if (!playlist_param) {
-    return response
-      .status(400)
-      .send({ error: `No playlist id provided.`});
+    return response.status(400).send({ error: `No playlist id provided.`});
   }
   if (!song_param) {
-    return response
-      .status(400)
-      .send({ error: `No song id provided.`});
+    return response.status(400).send({ error: `No song id provided.`});
   }
   const playlist_song = {
     song_id: song_param,
