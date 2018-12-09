@@ -50,10 +50,10 @@ describe('API Routes', () => {
       });
   });
 
-  describe('GET /api/v1/songs', () => {
+  describe('GET /api/v1/favorites', () => {
     it('returns all of the songs', done => {
       chai.request(server)
-        .get('/api/v1/songs')
+        .get('/api/v1/favorites')
         .end((error, response) => {
           response.should.have.status(200);
           response.should.be.json;
