@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-
+const pry = require('pryjs');
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
@@ -90,12 +90,24 @@ app.get('/api/v1/playlists/:playlist_id/songs', (request, response) => {
 app.post('/api/v1/playlists/:playlist_id/songs/:id', (request, response) => {
   const playlist_param = request.params.playlist_id;
   const song_param = request.params.id;
+
   if (!playlist_param) {
-    return response.status(400).send({ error: `No playlist id provided.`});
+    return response.status(404).send({ error: `No playlist id provided.`});
   }
   if (!song_param) {
-    return response.status(400).send({ error: `No song id provided.`});
+    return response.status(404).send({ error: `No song id provided.`});
   }
+
+  const SONG_NAME = database('songs').where('id', song_param).select('name').then((song) => {return song})
+  const PLAYLIST_NAME = database('playlists').where('id', playlist_param).select('playlist_name').then((playlist) => {return playlist})
+
+  if (!SONG_NAME) {
+    return response.status(404).send({ error: `Not a valid song.`});
+  }
+  if (!PLAYLIST_NAME) {
+    return response.status(404).send({ error: `Not a valid playlist.`});
+  }
+
   const playlist_song = {
     song_id: song_param,
     playlist_id: playlist_param
@@ -103,11 +115,10 @@ app.post('/api/v1/playlists/:playlist_id/songs/:id', (request, response) => {
 
   database('playlist_songs').insert(playlist_song, 'id').returning('*')
     .then(value => {
-      const song_playlist = value[0]
-      response.status(201).json({ song_playlist })
+      response.status(201).json({ message: `Successfully added ${SONG_NAME} to ${PLAYLIST_NAME}` })
     })
     .catch(error => {
-      response.status(500).json({ error });
+      response.status(404).json({ error: "Could not complete the request" });
     });
 });
 
