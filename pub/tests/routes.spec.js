@@ -58,6 +58,15 @@ describe('API Routes', () => {
           response.should.have.status(200);
           response.should.be.json;
           response.body.should.be.a('array');
+          response.body.length.should.equal(4);
+          response.body[0].should.have.property('name');
+          response.body[0].name.should.equal('I Want to Break Free');
+          response.body[0].should.have.property('artist_name');
+          response.body[0].artist_name.should.equal('Queen');
+          response.body[0].should.have.property('genre');
+          response.body[0].genre.should.equal('Rock');
+          response.body[0].should.have.property('song_rating');
+          response.body[0].song_rating.should.equal(99);
           done();
         });
     });
