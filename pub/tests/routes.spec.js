@@ -6,7 +6,7 @@ const server = require('../../server');
 chai.use(chaiHttp);
 
 describe('Client Routes', () => {
-  it('should return the homepage with text', done => {
+  it('returns the homepage with text', done => {
     chai.request(server)
     .get('/')
     .end((err, response) => {
@@ -16,6 +16,17 @@ describe('Client Routes', () => {
       done();
     });
   });
+
+  it('returns a 404 for a route that does not exist', done => {
+    chai.request(server)
+    .get('/sadly')
+    .end((err, response) => {
+      response.should.have.status(404);
+      done();
+    });
+  });
+
+
 });
 
 describe('API Routes', () => {
