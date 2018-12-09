@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const pry = require('pryjs');
+
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
@@ -120,7 +120,7 @@ app.delete('/api/v1/playlists/:playlist_id/songs/:id', (request, response) => {
   };
 
   const deleteSongPlaylist = () => {
-    database('playlist_songs').where('playlist_songs.playlist_id', '=', playlist_param).where('playlist_songs.song_id', '=', song_param).limit('1').del()
+    return database('playlist_songs').where('playlist_songs.playlist_id', '=', playlist_param).where('playlist_songs.song_id', '=', song_param).limit('1').del()
   }
   //validations
   // if (!SONG_NAME) {
