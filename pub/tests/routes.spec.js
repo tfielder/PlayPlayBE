@@ -72,6 +72,27 @@ describe('API Routes', () => {
     });
   });
 
+  describe('GET /api/v1/songs/:id', () => {
+    it('returns a specific song', done => {
+      chai.request(server)
+      .get('/api/v1/songs/1')
+      .end((err, response) => {
+        response.should.have.status(200);
+        response.body.should.be.a('object');
+        response.body.length.should.equal(1);
+        response.body[0].should.have.property('name');
+        response.body[0].name.should.equal('I Want to Break Free');
+        response.body[0].should.have.property('artist_name');
+        response.body[0].artist_name.should.equal('Queen');
+        response.body[0].should.have.property('genre');
+        response.body[0].genre.should.equal('Rock');
+        response.body[0].should.have.property('song_rating');
+        response.body[0].song_rating.should.equal(99);
+        done();
+      });
+    });
+  });
+
   describe('POST /api/v1/songs', () => {
     it('creates a new song', done => {
       chai.request(server)
@@ -90,6 +111,5 @@ describe('API Routes', () => {
       });
     });
   });
-
 
 });
