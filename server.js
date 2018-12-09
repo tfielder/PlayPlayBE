@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-
+const pry = require('pryjs');
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
@@ -19,13 +19,75 @@ app.get('/', (request, response) => {
 //Read
 app.get('/api/v1/playlists', (request, response) => {
 
-  database('playlists').select('id', 'playlist_name')
-    .then((playlists) => {
-      response.status(200).json(playlists);
-    })
-    .catch((error) => {
-      response.status(500).json({ error });
-    });
+    const getAllPlaylists = () => {
+      return database('playlists')
+        .select('playlists.id', 'playlists.playlist_name')
+          .returning('*')
+            .catch( error => {
+              response.status(500).json( {error} )
+            });
+    }
+
+    const getSongs = (playlist_id) => {
+      return database('playlists')
+            .where('playlists.id', playlist_id)
+              .innerJoin('playlist_songs', 'playlists.id', '=', 'playlist_songs.playlist_id')
+                .join('songs', 'playlist_songs.song_id', '=', 'songs.id')
+                  .select('songs.id', 'songs.name', 'songs.artist_name', 'songs.genre', 'songs.song_rating')
+                    .returning('*')
+                    .catch( error => {
+                      response.status(500).json( {error} )
+                    });
+    }
+
+    const getPlaylist = (playlist_id) => {
+      return database('playlists')
+          .where('playlists.id', playlist_id)
+            .select('playlists.id', 'playlists.playlist_name')
+              .returning('*')
+              .catch( error => {
+                response.status(500).json( {error} )
+              });
+    }
+
+//working on it ****
+  let promises = [];
+    const getPlaylistSongs = () => {
+      let playlistsongs = null;
+      let songlist = null;
+      return getAllPlaylists()
+        .then((playlisters) => {
+          if (!playlisters || playlisters.length === 0) {
+            return { error: 'no playlists found'}
+          };
+          playlistsongs = playlisters;
+          playlistsongs.forEach(p => {
+          // let this_promise = Promise.resolve(getSongs(p.id))
+          //   // // Promise.all(this_promise).then((nothing) => {
+          //   //   return nothing;
+          //   // })
+          //   promises.push(this.this_promise);
+          //   p.songs = this.this_promise;
+            p.songs = getSongs(p.id);
+          });
+          return playlistsongs;
+        })
+        .catch( error => {
+          response.status(500).json( {error} )
+        })
+    }
+
+      return getPlaylistSongs()
+        .then((playlist) => {
+          // eval(pry.it);
+          // Promise.all(promises).then((nothing) => {
+          // return nothing;
+          // })
+          response.status(200).json({ playlist} )
+        })
+        .catch( error => {
+          response.status(500).json( {error})
+        });
 });
 
 app.get('/api/v1/playlists/:playlist_id/songs', (request, response) => {
