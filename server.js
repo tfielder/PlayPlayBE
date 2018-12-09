@@ -114,13 +114,6 @@ app.delete('/api/v1/playlists/:playlist_id/songs/:id', (request, response) => {
   const playlist_param = request.params.playlist_id;
   const song_param = request.params.id;
 
-  if (!playlist_param) {
-    return response.status(404).send({ error: `No playlist id provided.`});
-  }
-  if (!song_param) {
-    return response.status(404).send({ error: `No song id provided.`});
-  }
-
   const SONG_NAME = database('songs').where('id', song_param).select('name').then((song) => {return song})
   const PLAYLIST_NAME = database('playlists').where('id', playlist_param).select('playlist_name').then((playlist) => {return playlist})
 
