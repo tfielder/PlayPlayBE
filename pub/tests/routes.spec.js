@@ -72,24 +72,24 @@ describe('API Routes', () => {
     });
   });
 
-  // describe('POST /api/v1/songs', () => {
-  //   it('creates a new song', done => {
-  //     chai.request(server)
-  //     .post('/api/v1/songs')
-  //     .send({
-  //       name: 'Titanium',
-  //       artist_name: 'David Guetta feat. Sia',
-  //       genre: 'Electronic',
-  //       song_rating: 99
-  //     })
-  //     .end((err, response) => {
-  //       response.should.have.status(201);
-  //       response.body.should.be.a('object');
-  //       response.body.should.have.property('name');
-  //       done();
-  //     });
-  //   });
-  // });
+  describe('POST /api/v1/songs', () => {
+    it('creates a new song', done => {
+      chai.request(server)
+      .post('/api/v1/songs')
+      .send({
+        name: 'Titanium',
+        artist_name: 'David Guetta feat. Sia',
+        genre: 'Electronic',
+        song_rating: 99
+      })
+      .end((err, response) => {
+        response.should.have.status(201);
+        response.body.should.be.a('object');
+        // response.body.should.have.property('name');
+        done();
+      });
+    });
+  });
 
 
 });
