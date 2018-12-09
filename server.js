@@ -96,12 +96,18 @@ app.post('/api/v1/playlists/:playlist_id/songs/:id', (request, response) => {
     playlist_id: playlist_param
   };
 
+  const insertIntoDatabase = (params) => {
+    return database('playlist_songs').insert(params, 'id').returning('*')
+  }
+
   database('songs').where('id', song_param).select('name')
     .then((song) => {return song_name = song[0]["name"];})
     .then((song) => {return database('playlists').where('id', playlist_param).select('playlist_name')})
     .then((playlist) => {playlist_name = playlist[0]["playlist_name"];})
-    .then( database('playlist_songs').insert(playlist_song, 'id').returning('*'))
-    .then(value => {
+    .then((playlist) => {
+      database('playlist_songs').insert(playlist_song, 'id').returning('*')})
+    .then((value) => {
+      insertIntoDatabase(playlist_song);
       response.status(201).json({ message: `Successfully added '${song_name}' to '${playlist_name}'` })
     })
     .catch(error => {
