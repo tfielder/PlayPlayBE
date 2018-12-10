@@ -1,4 +1,4 @@
-PLAY PLAY BE README
+## PLAY PLAY BE README
 
 ## Description
 This project contains the codebase for the backend project of PlayPlay.
