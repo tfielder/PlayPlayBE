@@ -1,1 +1,38 @@
 PLAY PLAY BE README
+
+## Description
+This project contains the codebase for the backend project of PlayPlay.
+
+The live version may be accessed here: https://obscure-temple-38871.herokuapp.com/
+
+This backend codebase is accessed by the frontend project codebase found here:
+https://github.com/tfielder/play_fe
+
+
+Current endpoints may be accessed through:
+
+songs -
+index of all songs - https://obscure-temple-38871.herokuapp.com/api/v1/favorites
+show an individual song - https://obscure-temple-38871.herokuapp.com/api/v1/songs/:id
+
+create
+update
+delete
+
+playlists - 
+index of all playlists - https://obscure-temple-38871.herokuapp.com/api/v1/olaylists
+show an individual playlist - https://obscure-temple-38871.herokuapp.com/api/v1/olaylists/:id
+
+create
+update
+delete
+
+## Authors:
+Tim Fielder and Patrick Shobe
+
+## Date:
+December 10, 2018
+
+## Version:
+1.0.0
+
