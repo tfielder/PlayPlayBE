@@ -6,6 +6,8 @@ const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
 
+const Song = require('./lib/models/song')
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('port', process.env.PORT || 3000);
@@ -163,7 +165,7 @@ app.post('/api/v1/songs', (request, response) => {
 //Read
 app.get('/api/v1/favorites', (request, response) => {
 
-  database('songs').select('id', 'name', 'artist_name', 'genre', 'song_rating')
+  Song.all()
     .then((songs) => {
       response.status(200).json(songs);
     })
@@ -173,7 +175,8 @@ app.get('/api/v1/favorites', (request, response) => {
 });
 
 app.get('/api/v1/songs/:id', (request, response) => {
-  database('songs').where('id', request.params.id).select('id', 'name', 'artist_name', 'genre', 'song_rating')
+
+  Song.find_by_id(request.params.id)
     .then(song => {
       if (song.length) {
         response.status(200).json(song);
@@ -208,7 +211,9 @@ app.put('/api/v1/songs/:id', (request, response) => {
     song_rating: request.body["songs"]['song_rating']
   };
 
-  database('songs').where('id', request.params.id).update(update_info).returning('*')
+  //Song.update_song(id, update_info)
+  Song.update_song(request.params.id, update_info)
+  //database('songs').where('id', request.params.id).update(update_info).returning('*')
     .then(song => {
       response.status(200).json({ song })
     })
@@ -219,9 +224,11 @@ app.put('/api/v1/songs/:id', (request, response) => {
 
 //Destroy
 app.delete('/api/v1/songs/:id', (request, response) => {
-  const song = database('songs').where('id', request.params.id).select();
+  //const song = database('songs').where('id', request.params.id).select();
+  const song = Song.find_by_id(request.params.id);
   if (song) {
-    database('songs').where('id', request.params.id).del().returning('*')
+    Song.delete_song(request.params.id)
+    //database('songs').where('id', request.params.id).del().returning('*')
       .then(song => {
         return response.status(204);
       })
