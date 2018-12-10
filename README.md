@@ -3,8 +3,6 @@ PLAY PLAY BE README
 ## Description
 This project contains the codebase for the backend project of PlayPlay.
 
-The live version may be accessed here: https://obscure-temple-38871.herokuapp.com/
-
 This backend codebase is accessed by the frontend project codebase found here:
 https://github.com/tfielder/play_fe
 
