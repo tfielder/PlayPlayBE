@@ -17,7 +17,7 @@ update <br />
 delete <br />
 
 playlists - <br />
-index of all playlists - https://obscure-temple-38871.herokuapp.com/api/v1/olaylists <br />
+index of all playlists - https://obscure-temple-38871.herokuapp.com/api/v1/playlists <br />
 show an individual playlist - `https://obscure-temple-38871.herokuapp.com/api/v1/olaylists/:id` <br />
 
 create <br />
