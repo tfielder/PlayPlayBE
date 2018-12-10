@@ -6,8 +6,10 @@ const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
 
-const Song = require('./lib/models/song')
-const Playlist = require('./lib/models/playlist')
+const Song = require('./lib/models/song');
+const Playlist = require('./lib/models/playlist');
+
+const songs_routes = require('./lib/routes/api/v1/songs');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -164,16 +166,10 @@ app.post('/api/v1/songs', (request, response) => {
 });
 
 //Read
-app.get('/api/v1/favorites', (request, response) => {
-
-  Song.all()
-    .then((songs) => {
-      response.status(200).json(songs);
-    })
-    .catch((error) => {
-      response.status(500).json({ error });
-    });
-});
+app.use('/api/v1/favorites', songs_routes);
+// app.get('/api/v1/favorites', (request, response) => {
+//
+// });
 
 app.get('/api/v1/songs/:id', (request, response) => {
 
