@@ -10,7 +10,7 @@ Current endpoints may be accessed through:
 
 songs - <br />
 index of all songs - https://obscure-temple-38871.herokuapp.com/api/v1/favorites <br />
-show an individual song - https://obscure-temple-38871.herokuapp.com/api/v1/songs/:id <br />
+show an individual song - `https://obscure-temple-38871.herokuapp.com/api/v1/songs/:id` <br />
 
 create <br />
 update <br />
@@ -18,7 +18,7 @@ delete <br />
 
 playlists - <br />
 index of all playlists - https://obscure-temple-38871.herokuapp.com/api/v1/olaylists <br />
-show an individual playlist - https://obscure-temple-38871.herokuapp.com/api/v1/olaylists/:id <br />
+show an individual playlist - `https://obscure-temple-38871.herokuapp.com/api/v1/olaylists/:id` <br />
 
 create <br />
 update <br />
