@@ -152,7 +152,8 @@ app.post('/api/v1/songs', (request, response) => {
     }
   }
 
-  database('songs').insert(song, 'id').returning('*')
+  Song.create_song(song)
+  //database('songs').insert(song, 'id').returning('*')
     .then(song => {
       const songs = song[0]
       response.status(201).json({ songs })
