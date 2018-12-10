@@ -146,9 +146,7 @@ app.post('/api/v1/songs', (request, response) => {
   const song = request.body;
   for (let requiredParameter of ['name', 'artist_name', 'genre', 'song_rating']){
     if (!song[requiredParameter]){
-      return response
-        .status(400)
-        .send({ error: `Expected format: { name: <String>, artist_name: <String>, genre: <String>, song_rating: <Integer>}. You're missing a "${requiredParameter}" property.`});
+      return response.status(400).send({ error : `Expected format: { name: <String>, artist_name: <String>, genre: <String>, song_rating: <Integer>}. You're missing a "${requiredParameter}" property.`});
     }
   }
 
