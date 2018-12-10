@@ -7,6 +7,7 @@ const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
 
 const Song = require('./lib/models/song')
+const Playlist = require('./lib/models/playlist')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -21,7 +22,8 @@ app.get('/', (request, response) => {
 //Read
 app.get('/api/v1/playlists', (request, response) => {
 
-  database('playlists').select('id', 'playlist_name')
+  Playlist.all()
+  //database('playlists').select('id', 'playlist_name')
     .then((playlists) => {
       response.status(200).json(playlists);
     })
