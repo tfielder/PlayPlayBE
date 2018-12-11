@@ -25,6 +25,7 @@ update <br />
 delete <br />
 
 ## To Setup:
+In the directory of your choice run the following code from the command line: <br />
 $ `git clone git@github.com:tfielder/PlayPlayBE.git`
 
 ## To Run the code locally:
