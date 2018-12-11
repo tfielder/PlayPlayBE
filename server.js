@@ -23,17 +23,7 @@ app.get('/', (request, response) => {
 
 // Playlists Section
 //Read
-app.get('/api/v1/playlists', (request, response) => {
-
-  Playlist.all()
-  //database('playlists').select('id', 'playlist_name')
-    .then((playlists) => {
-      response.status(200).json(playlists);
-    })
-    .catch((error) => {
-      response.status(500).json({ error });
-    });
-});
+app.use('/api/v1/playlists', playlists_routes);
 
 app.get('/api/v1/playlists/:playlist_id/songs', (request, response) => {
   const playlist_id = parseInt(request.params.playlist_id);
