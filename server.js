@@ -12,7 +12,7 @@ app.set('port', process.env.PORT || 3000);
 app.locals.title = 'playplay';
 
 app.get('/', (request, response) => {
-  response.send("Welcome!\n");
+  response.send("Welcome!");
 });
 
 // Playlists Section
@@ -113,11 +113,6 @@ app.post('/api/v1/playlists/:playlist_id/songs/:id', (request, response) => {
 app.delete('/api/v1/playlists/:playlist_id/songs/:id', (request, response) => {
   const playlist_param = request.params.playlist_id;
   const song_param = request.params.id;
-
-  const playlist_song = {
-    song_id: song_param,
-    playlist_id: playlist_param
-  };
 
   const deleteSongPlaylist = () => {
     return database('playlist_songs').where('playlist_songs.playlist_id', '=', playlist_param).where('playlist_songs.song_id', '=', song_param).limit('1').del()
@@ -241,3 +236,5 @@ app.delete('/api/v1/songs/:id', (request, response) => {
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} is running on ${app.get('port')}.`);
 });
+
+module.exports = app;
