@@ -90,28 +90,28 @@ app.get('/api/v1/playlists/:playlist_id/songs', (request, response) => {
 app.post('/api/v1/playlists/:playlist_id/songs/:id', (request, response) => {
   const playlist_param = request.params.playlist_id;
   const song_param = request.params.id;
-  if (!playlist_param) {
-    return response
-      .status(400)
-      .send({ error: `No playlist id provided.`});
-  }
-  if (!song_param) {
-    return response
-      .status(400)
-      .send({ error: `No song id provided.`});
-  }
+
   const playlist_song = {
     song_id: song_param,
     playlist_id: playlist_param
   };
 
-  database('playlist_songs').insert(playlist_song, 'id').returning('*')
-    .then(value => {
-      const song_playlist = value[0]
-      response.status(201).json({ song_playlist })
+  const insertIntoDatabase = (params) => {
+    return database('playlist_songs').insert(params, 'id').returning('*')
+  }
+
+  database('songs').where('id', song_param).select('name')
+    .then((song) => {return song_name = song[0]["name"];})
+    .then((song) => {return database('playlists').where('id', playlist_param).select('playlist_name')})
+    .then((playlist) => {playlist_name = playlist[0]["playlist_name"];})
+    .then((playlist) => {
+      database('playlist_songs').insert(playlist_song, 'id').returning('*')})
+    .then((value) => {
+      insertIntoDatabase(playlist_song);
+      response.status(201).json({ message: `Successfully added '${song_name}' to '${playlist_name}'` })
     })
     .catch(error => {
-      response.status(500).json({ error });
+      response.status(404).json({ error: "Could not complete the request" });
     });
 });
 
