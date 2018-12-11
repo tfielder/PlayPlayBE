@@ -10,6 +10,7 @@ const Song = require('./lib/models/song');
 const Playlist = require('./lib/models/playlist');
 
 const songs_routes = require('./lib/routes/api/v1/songs');
+const playlists_routes = require('./lib/routes/api/v1/playlists');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
