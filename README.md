@@ -28,15 +28,15 @@ delete <br />
 $ `git clone git@github.com:tfielder/PlayPlayBE.git`
 
 ## To Run the code locally:
-Open the PlayPlayBE directory.
-In the command line run the following:
-$ `npm install`
-$ `npm start`
-$ `nodemon server.js` or $ `node server.js`
+Open the PlayPlayBE directory.<br />
+In the command line run the following:<br />
+$ `npm install`<br />
+$ `npm start`<br />
+$ `nodemon server.js` or $ `node server.js`<br />
 
-In your browser navigate to
-`localhost:3000/api/v1/favorites`
-to check and make sure the project is running.
+In your browser navigate to<br />
+`localhost:3000/api/v1/favorites`<br />
+to check and make sure the project is running.<br />
 
 
 ## Authors:
