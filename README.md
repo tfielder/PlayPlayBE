@@ -33,8 +33,8 @@ Open the PlayPlayBE directory.<br />
 In the command line run the following:<br />
 $ `npm install`<br />
 $ `npm start`<br />
-$ `knex migrate:latest`
-$ `knex seed:run`
+$ `knex migrate:latest`<br />
+$ `knex seed:run`<br />
 $ `nodemon server.js` or $ `node server.js`<br />
 
 In your browser navigate to<br />
